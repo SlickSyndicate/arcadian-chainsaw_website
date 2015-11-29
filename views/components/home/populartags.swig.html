@@ -1,0 +1,16 @@
+{% for tag in popularTags %}
+	<div class="col-md-4 md-margin-bottom-30">
+		<div class="overflow-h">
+			<a class="illustration-v3 illustration-img1" href="#">
+                        <span class="illustration-bg">
+                            <span class="illustration-ads">
+                                <span class="illustration-v3-category">
+                                    <span class="product-category">{{ tag.name }}</span>
+                                    <span class="product-amount">{{ tag.totalAddons }} Addons</span>
+                                </span>
+                            </span>
+                        </span>
+			</a>
+		</div>
+	</div>
+{% endfor %}
