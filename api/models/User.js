@@ -3,8 +3,8 @@ var BCrypt = require('bcrypt');
 module.exports = {
     schema: true,
     attributes: {
-        email: {
-            type: 'email',
+        username: {
+            type: 'string',
             unique: true,
             required: true
         },
@@ -32,7 +32,7 @@ module.exports = {
     },
 
     beforeValidate: function(user, cb) {
-        BCrypt.genSalt(64, function(err, salt) {
+        BCrypt.genSalt(10, function(err, salt) {
            if (err) {
                console.error(err);
                cb(err);
@@ -45,7 +45,7 @@ module.exports = {
 
     beforeCreate: function(user, cb) {
         BCrypt.hash(user.password, user.salt, function(err, hash) {
-           if (err) {
+            if (err) {
                console.error(err);
                cb(err);
            } else {

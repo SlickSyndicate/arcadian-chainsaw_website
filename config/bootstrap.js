@@ -26,12 +26,15 @@ var setupPassport = function () {
             done(err)
         });
     });
-    Passport.use(new LocalStrategy({usernameField: "email"}, function (email, password, done) {
-            User.findOne({email: email}, function (err, user) {
+    Passport.use(new LocalStrategy({usernameField: "username"}, function (username, password, done) {
+            User.findOne({username: username}, function (err, user) {
                 if (err) return done(err);
                 if (!user) return done(null, false);
-                if (!user.verifyPassword(password)) return done(null, false);
-                return done(null, user);
+
+                user.validatePassword(password, function(match) {
+                    if (match) return done(null, user);
+                    else return done(null, false);
+                });
             });
         }
     ));

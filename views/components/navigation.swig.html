@@ -14,13 +14,17 @@
           <a href="#">About</a>
         </li>
         <li>
-          <a href="#">Play</a>
+          <a href="https://github.com/SlickSyndicate"><i class="fa fa-github"></i> Github</a>
+        </li>
+        <li>
+          <a href="">Play</a>
         </li>
       </ul>
 
       {% if user %}
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Welcome, {{ user.username }}</a></li>
+          <li><a href="/auth/logout">Logout</a></li>
         </ul>
       {% else %}
         <ul id="loginAndRegisterLinks" class="nav navbar-nav navbar-right">

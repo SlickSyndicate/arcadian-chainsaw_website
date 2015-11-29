@@ -244,8 +244,8 @@
             <div class="modal-body">
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="emailInput">Email</label>
-                        <input type="email" class="form-control" id="emailInput" placeholder="Email" name="email">
+                        <label for="usernameInput">Username</label>
+                        <input type="text" class="form-control" id="usernameInput" placeholder="Username" name="username">
                     </div>
                     <div class="form-group">
                         <label for="passwordInput">Password</label>
@@ -284,30 +284,28 @@
         var $loginAndRegisterLinks = $('#loginAndRegisterLinks');
         var $loginAndRegisterModal = $('#loginAndRegisterModal');
         var $submitButton = $("#submitButton");
-        var $emailInput = $("#emailInput");
+        var $usernameInput = $("#usernameInput");
         var $passwordInput = $("#passwordInput");
         var $loginForm = $("#loginForm");
 
-        var emailTaken = false;
-        // Check if an email is in use as a user types
-        $emailInput.on('keyup', function () {
-            io.socket.post("/auth/checkEmail", {
-                email: $emailInput.val()
+        var usernameTaken = false;
+        // Check if a username is in use as a user types
+        $usernameInput.on('keyup', function () {
+            io.socket.post("/auth/checkUsername", {
+                username: $usernameInput.val()
             }, function (response) {
-                emailTaken = response.taken;
+                if (response.taken) {
+                    $submitButton.text('Login');
+                } else {
+                    $submitButton.text('Register');
+                }
             });
         });
 
-        $.validator.addMethod("emailTaken", function() {
-            return !emailTaken;
-        }, "That email is taken.");
-
         $loginForm.validate({
             rules: {
-                email: {
-                    required: true,
-                    email: true,
-                    emailTaken: true
+                username: {
+                    required: true
                 },
                 password: {
                     required: true,
@@ -340,10 +338,11 @@
                 method: "POST",
                 url: "/login",
                 data: {
-                    email: $emailInput.val(),
+                    username: $usernameInput.val(),
                     password: $passwordInput.val()
                 }
             }).done(function () {
+                console.log("OK")
                 window.location.replace("/dashboard");
             }).fail(function (err) {
                 console.error(err);

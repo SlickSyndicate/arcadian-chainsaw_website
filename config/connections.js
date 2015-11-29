@@ -45,7 +45,7 @@ module.exports.connections = {
     host: 'localhost',
     user: 'postgres',
     password: 'postgres',
-    database: 'towngame_website'
+    database: 'arcadian-chainsaw'
   }
 
 };
